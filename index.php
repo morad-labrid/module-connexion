@@ -14,7 +14,7 @@
             padding: 0;
         }
         body{
-            background-color: #0E074B;
+            background-color: #090535;
             color: white;
             font-family: 'Archivo', cursive, sans-serif;
             padding: 0 100px;
@@ -35,8 +35,13 @@
         }
         main section div p{
             width: 400px;
-            margin-top: 50px;
+            margin-top: 30px;
+            letter-spacing: 2px
         }
+        main section div h1{
+            font-size: 50px;
+        }
+
         img{
             width: 450px;
         }
@@ -46,7 +51,12 @@
             justify-content: space-between;
             align-items: center;
         }
-
+        nav a{
+            margin: 0 15px;
+        }
+        footer{
+            
+        }
     
     
     </style>
@@ -65,7 +75,7 @@
         <section>
             <div>
                 <h1>Trouvez votre vibe</h1>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. In libero omnis repellat doloribus expedita. Dignissimos, quasi reiciendis earum nobis libero doloremque nihil neque harum quidem nostrum, voluptas illo enim fugit.</p>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. In libero omnis repellat doloribus expedita.</p>
             </div>
             <div>
                 <img src="assets/banner1-3.png" alt="Photo">

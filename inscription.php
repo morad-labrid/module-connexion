@@ -1,5 +1,5 @@
 <?php
-    session_start();
+
     $servername = "localhost";
     $username = "root";
     $password = "root";
@@ -7,9 +7,6 @@
 
     $sql = mysqli_connect($servername, $username, $password, $dbname);
     $checklogin = mysqli_query($sql, "SELECT login FROM utilisateurs WHERE login='$login'");
-    
-    
-        
 
         if (isset($_POST['submit'])) {
             $login = $_POST['login'];
@@ -18,7 +15,6 @@
             $password = $_POST['password'];
             $confirm_password = $_POST['confirm_password'];
 
-            
 
             if (!empty($login) && !empty($nom) && !empty($prenom) && !empty($password) && !empty($confirm_password)){
                 $query = "INSERT INTO utilisateurs(login, prenom, nom, password) 
@@ -36,8 +32,9 @@
                     echo "Bienvenue $prenom";
                 }
 
-            }else {
-                $remplissez = "Remplisser le formulaire YALAHMAR<br>";
+            }
+            else {
+                $remplissez = "Remplissez le formulaire YALAHMAR<br>";
             }
             
             
@@ -110,8 +107,42 @@
         nav a{
             margin: 0 15px;
         }
+        main{
+            padding: 100px 0;
+        }
         footer{
-            
+            text-align: center;
+        }
+        form input{
+            background: none;
+            border: 1px solid white;
+            width: 250px;
+            height: 30px;
+            color: white;
+            padding: 0 20px;
+            margin: 8px;
+            outline: none;
+        }
+        form input:focus{
+            box-shadow: 0px 0px 10px 2px rgba(255,255,255,1);
+            border: 0 solid white;
+            width: 280px;
+            height: 32px;
+        }
+        input::placeholder {
+            color: white;
+            font-weight: lighter;
+        }
+        input[type="submit"]{
+        cursor:pointer;
+        width: 100px
+        }
+        input[type="submit"]:hover{
+        background-color: white;
+        color: black; 
+        }
+        input[type="submit"]:focus{
+            width: 100px
         }
     
     
@@ -137,20 +168,20 @@
             </h3>
                 <form action="" method="POST">
 
-                    <label for="login">Pseudo</label>
-                    <input type="text" name="login" id="login" >
+                    <label for="login"></label>
+                    <input type="text" name="login" id="login" placeholder="Username">
                     <br>
-                    <label for="nom">Votre nom</label>
-                    <input type="text" name="nom" id="nom" >
+                    <label for="nom"></label>
+                    <input type="text" name="nom" id="nom" placeholder="Nom">
                     <br>
-                    <label for="prenom">Votre prénom</label>
-                    <input type="text" name="prenom" id="prenom" >
+                    <label for="prenom"></label>
+                    <input type="text" name="prenom" id="prenom" placeholder="Prénom">
                     <br>
-                    <label for="password">entrez un mot de passe</label>
-                    <input type="password" name="password" id="password" >
+                    <label for="password"></label>
+                    <input type="password" name="password" id="password" placeholder="Mot de passe">
                     <br>
-                    <label for="confirm_password">confirmer votre mot de masse</label>
-                    <input type="password" name="confirm_password" id="confirm_password" >
+                    <label for="confirm_password"></label>
+                    <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirmer le mot de passe">
                     <br>
                     <input type="submit" name="submit" value="VALIDER">
                 </form>
@@ -160,7 +191,7 @@
     </main>
     <footer>
         <div>
-            <p>Copyright 2020</p>
+            <p>Copyright 2020 All rights reserved - Samy & Morad</p>
         </div>
     </footer>
 </body>

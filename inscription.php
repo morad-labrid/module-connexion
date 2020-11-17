@@ -1,45 +1,41 @@
 <?php
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "root";
-    $dbname = "moduleconnexion";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "moduleconnexion";
+$wrongpass = "";
+$existe = "";
+$remplissez = "";
 
-    $sql = mysqli_connect($servername, $username, $password, $dbname);
+$sql = mysqli_connect($servername, $username, $password, $dbname);
+
+if (isset($_POST['submit'])) {
+    $login = $_POST['login'];
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+
     $checklogin = mysqli_query($sql, "SELECT login FROM utilisateurs WHERE login='$login'");
 
-        if (isset($_POST['submit'])) {
-            $login = $_POST['login'];
-            $nom = $_POST['nom'];
-            $prenom = $_POST['prenom'];
-            $password = $_POST['password'];
-            $confirm_password = $_POST['confirm_password'];
-
-
-            if (!empty($login) && !empty($nom) && !empty($prenom) && !empty($password) && !empty($confirm_password)){
-                $query = "INSERT INTO utilisateurs(login, prenom, nom, password) 
+    if (!empty($login) && !empty($nom) && !empty($prenom) && !empty($password) && !empty($confirm_password)) {
+        $query = "INSERT INTO utilisateurs(login, prenom, nom, password)
                 VALUES ('$login', '$prenom', '$nom', '$password')";
-                
-                if ($password != $confirm_password) {
-                    $wrongpass = "le mot de passe n'est pas le meme YALAHMAR<br>";
-                }
 
-                elseif (mysqli_num_rows($checklogin) != 0) {
-                    $existe =  "Le Pseudo est deja  utiliser";
-                }
-
-                elseif (mysqli_query($sql, $query)) {
-                    echo "Bienvenue $prenom";
-                }
-
-            }
-            else {
-                $remplissez = "Remplissez le formulaire YALAHMAR<br>";
-            }
-            
-            
+        if ($password != $confirm_password) {
+            $wrongpass = "le mot de passe n'est pas le meme YALAHMAR<br>";
+        } elseif (mysqli_num_rows($checklogin) != 0) {
+            $existe = "Le Pseudo est deja  utiliser";
+        } elseif (mysqli_query($sql, $query)) {
+            echo "Bienvenue $prenom";
         }
-        
+
+    } else {
+        $remplissez = "Remplissez le formulaire YALAHMAR<br>";
+    }
+
+}
 
 ?>
 
@@ -128,6 +124,7 @@
             border: 0 solid white;
             width: 280px;
             height: 32px;
+            transition:0.5s;
         }
         input::placeholder {
             color: white;
@@ -139,13 +136,13 @@
         }
         input[type="submit"]:hover{
         background-color: white;
-        color: black; 
+        color: black;
         }
         input[type="submit"]:focus{
             width: 100px
         }
-    
-    
+
+
     </style>
 </head>
 <body>
@@ -187,7 +184,7 @@
                 </form>
                 </div>
         </section>
-    
+
     </main>
     <footer>
         <div>

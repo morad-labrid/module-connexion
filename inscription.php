@@ -2,11 +2,13 @@
 session_start();
 $servername = "localhost";
 $username = "root";
-$password = "root";
+$password = "";
 $dbname = "moduleconnexion";
+$wrongpass = "";
+$existe = "";
+$remplissez = "";
 
 $sql = mysqli_connect($servername, $username, $password, $dbname);
-$checklogin = mysqli_query($sql, "SELECT login FROM utilisateurs WHERE login='$login'");
 
 if (isset($_POST['submit'])) {
     $login = $_POST['login'];
@@ -14,6 +16,7 @@ if (isset($_POST['submit'])) {
     $prenom = $_POST['prenom'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
+    $checklogin = mysqli_query($sql, "SELECT login FROM utilisateurs WHERE login='$login'");
 
     if (!empty($login) && !empty($nom) && !empty($prenom) && !empty($password) && !empty($confirm_password)) {
         $query = "INSERT INTO utilisateurs(login, prenom, nom, password)

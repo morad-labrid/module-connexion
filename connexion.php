@@ -1,37 +1,8 @@
 <?php
 
-<<<<<<< HEAD
-    $servername = "localhost";
-    $username = "root";
-    $password = "root";
-    $dbname = "moduleconnexion";
-
-    $sql = mysqli_connect($servername, $username, $password, $dbname);
-        session_start();
-        if (isset($_POST['submit'])) {
-            $login = $_POST['login'];
-            $password = $_POST['password'];
-            $query = "SELECT * FROM utilisateurs WHERE login='$login' && password='$password'";
-
-            if (mysqli_num_rows(mysqli_query($sql,$query)) > 0) {
-                $_SESSION['login']=$login;
-                header("Location:profil.php");
-            }else {
-                $wrong = "le login ou le mot de passe n'est pas correct";
-            }
-        }
-        
-
-?>
-
-
-
-
-
-=======
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "root";
 $dbname = "moduleconnexion";
 $wrong = "";
 
@@ -52,7 +23,6 @@ if (isset($_POST['submit'])) {
 
 ?>
 
->>>>>>> connexion
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,42 +104,25 @@ if (isset($_POST['submit'])) {
             border: 0 solid white;
             width: 280px;
             height: 32px;
-<<<<<<< HEAD
-=======
             transition:0.5s;
->>>>>>> connexion
         }
         input::placeholder {
             color: white;
             font-weight: lighter;
         }
         input[type="submit"]{
-<<<<<<< HEAD
-            cursor:pointer;
-            width: 100px
-        }
-        input[type="submit"]:hover{
-            background-color: white;
-            color: black; 
-=======
         cursor:pointer;
         width: 100px
         }
         input[type="submit"]:hover{
         background-color: white;
         color: black;
->>>>>>> connexion
         }
         input[type="submit"]:focus{
             width: 100px
         }
-<<<<<<< HEAD
-    
-    
-=======
 
 
->>>>>>> connexion
     </style>
 </head>
 <body>
@@ -186,35 +139,20 @@ if (isset($_POST['submit'])) {
         <section>
             <div>
             <h3>
-<<<<<<< HEAD
-                <?php echo $wrong ?>
-            </h3>
-                <form action="" method="POST">
-=======
         <?php echo $wrong ?>
             </h3>
                 <form action="" method="POST">
 
->>>>>>> connexion
                     <label for="login"></label>
                     <input type="text" name="login" id="login" placeholder="Username">
                     <br>
                     <label for="password"></label>
                     <input type="password" name="password" id="password" placeholder="Mot de passe">
                     <br>
-<<<<<<< HEAD
-=======
-
->>>>>>> connexion
                     <input type="submit" name="submit" value="VALIDER">
                 </form>
                 </div>
         </section>
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> connexion
     </main>
     <footer>
         <div>
@@ -222,8 +160,4 @@ if (isset($_POST['submit'])) {
         </div>
     </footer>
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> connexion

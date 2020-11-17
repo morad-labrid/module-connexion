@@ -134,12 +134,12 @@
             font-weight: lighter;
         }
         input[type="submit"]{
-        cursor:pointer;
-        width: 100px
+            cursor:pointer;
+            width: 100px
         }
         input[type="submit"]:hover{
-        background-color: white;
-        color: black; 
+            background-color: white;
+            color: black; 
         }
         input[type="submit"]:focus{
             width: 100px

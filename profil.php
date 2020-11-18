@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 
 <!DOCTYPE html>
@@ -114,9 +113,6 @@
     </header>
     <main>
     <?php
-=======
-<?php
->>>>>>> profil.php
 
 session_start();
 if (!isset($_SESSION['login'])) {
@@ -125,7 +121,6 @@ if (!isset($_SESSION['login'])) {
     exit(0);
 }
 $login = $_SESSION['login'];
-<<<<<<< HEAD
 $sql = mysqli_connect('localhost', 'root', 'root', 'moduleconnexion');
         
     if (!$sql) {
@@ -170,20 +165,21 @@ echo "Ton Mot de passe est: $password<br>";
         $newLogin = $_POST['newlogin'];
         $checklogin = mysqli_query($sql, "SELECT login FROM utilisateurs WHERE login='$login'");
         
-        if (!empty($newLogin) !== false) { // si le formulaire est vide s'affichera un message erreur
+        if (!empty($newLogin)) { // si le formulaire est vide s'affichera un message erreur
             $query = "UPDATE utilisateurs SET login='" . htmlentities($_POST['newlogin']) . "' WHERE login='$login'";
 
             if ($login == $newLogin) {
                 $same = "utiliser un login différent que $login !!<br>";
             }
             
-            elseif (mysqli_num_rows($checklogin) != 0) {
+            elseif (mysqli_num_rows($checklogin) == 0) {
                 $existe = "Le login que vous avez saisi est déjà utilisé par un autre utilisateur<br>veuillez indiquer un autre Login :)";
             }
             
             elseif (mysqli_query($sql, $query)) {
                 $valide = "vous avez bien modifié '$login' à '$newLogin' <br>";
-                header("Refresh:5"); 
+                $_SESSION['login'] = $newLogin;
+                header("Refresh:3"); 
             }
             
         }else {
@@ -205,8 +201,8 @@ echo "Ton Mot de passe est: $password<br>";
             <input type="text" name="newnom" id="nom" placeholder="Entrer un nouveau Nom">
             <input type="submit" name="submitnewnom" value="valider">
             </form>';
-            $newNom = $_POST['newnom'];
     }
+
 
     if (isset($_POST['submitnewnom'])) { // si l'utilisateur appuis sur valider (submitnewnom)
         $newNom = $_POST['newnom'];
@@ -216,13 +212,14 @@ echo "Ton Mot de passe est: $password<br>";
 
             if (mysqli_query($sql, $query)) {
                 $valide = "vous avez bien modifier votre nom($nom) à ($newNom)";
-                header("Refresh:5");
+                header("Refresh:3");
             }
             
         }else {
             $vide = "Remplissez le formulaire SVP !!<br>";
         }
     }
+
     // Fin de chagement de l'ancien Nom
     
     
@@ -249,7 +246,7 @@ echo "Ton Mot de passe est: $password<br>";
 
             if (mysqli_query($sql, $query)) {
                 $valide = "vous avez bien modifier votre prénom($prenom) à ($newPrenom)";
-                header("Refresh:5"); 
+                header("Refresh:3"); 
             }
             
         }else {
@@ -289,7 +286,7 @@ echo "Ton Mot de passe est: $password<br>";
         
         elseif (mysqli_query($sql, $query)) {
             echo "Le mot de passe a bien été changé";
-            header("Refresh:5"); 
+            header("Refresh:3"); 
         }
     }else {
         $wrong = "Le mot de passe que vous avez inseré n'est pas correct";
@@ -315,16 +312,21 @@ echo "Ton Mot de passe est: $password<br>";
 
     if (isset($_POST['supprimer'])) {
         $delete =  'êtes-vous sûr de vouloir supprimer votre compte définitivement?<br>
+                    <form method="post">
                     <input type="submit" name="oui" value="oui">
                     <input type="submit" name="non" value="non">
+                    </form>
                     ';
-        if (isset($_POST['oui'])) {
-            # code...
-        }
-    
-    
-    
-                }
+    }
+
+    if (isset($_POST['oui'])) {
+         
+        (mysqli_query($sql, "DELETE FROM utilisateurs WHERE login = '$login'"));
+        session_unset ( );
+        $oui = "Votre compte a bien été supprimé";
+        header("Refresh:3"); 
+
+    }
 
 ?>
         <form action="" method="post">
@@ -345,6 +347,7 @@ echo "Ton Mot de passe est: $password<br>";
         <input type="submit" name="supprimer" value="Supprimer">
         </form>
         <p><?php  echo $delete   ?></p>
+        <p><?php  echo $oui   ?></p>
     </main>
     <footer>
         <div>
@@ -356,187 +359,3 @@ echo "Ton Mot de passe est: $password<br>";
 
 
 
-=======
-$mysqli = mysqli_connect('localhost', 'root', '', 'moduleconnexion');
-if (!$mysqli) {
-    echo "Erreur connexion";
-    exit(0);
-}
-
-$req = mysqli_query($mysqli, "SELECT * FROM utilisateurs WHERE login='$login'");
-$info = mysqli_fetch_assoc($req);
-?>
-
-
-<!DOCTYPE HTML>
-<html>
-    <head>
-		<link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
-                <link href="moduleconnexion.css" rel="stylesheet">
-
-        <title>Profil</title>
-    </head>
-    <body>
-        <h1>Profil</h1>
-      <p>  Pour modifier tes informations <a href="profil.php?modifier">cliquez ici</a></p>
-        <br>
-      <p>  Pour supprimer ton compte <a href="profil.php?supprimer">cliquez ici</a></p>
-        <br>
-      <p>  Pour te déconnecter <a href="profil.php?deconnexion">cliquez ici</a> </p>
-
-        <?php
-if (isset($_GET['deconnexion'])) {
-
-    unset($_SESSION['login']);
-    header("Refresh: 3; url=index.php");
-
-    echo "<p>Tu es correctement déconnecté du site.</p><br><p>Redirection vers la page d'accueil...</p>";
-}
-
-if (isset($_GET['supprimer'])) {
-    if ($_GET['supprimer'] != "ok") {
-        echo "<p>Tu es sûr de vouloir supprimer ce compte définitivement?</p>
-                <br>
-                <h2></p><a href='profil.php?supprimer=ok' style='color:red'>OUI</a> <a href='profil.php' style='color:green'>NON</a></h2>";
-    } else {
-        if (mysqli_query($mysqli, "DELETE FROM utilisateurs WHERE pseudo='$login'")) {
-            echo "Ton compte vient d'être supprimé pour toujours.";
-            unset($_SESSION['login']);
-        } else {
-            echo "Il y a une erreur quelque part ...";
-        }
-    }
-}
-
-if (isset($_GET['modifier'])) {
-    ?>
-            <h1>Modification du profil</h1>
-            <p>
-
-                <a href="profil.php?modifier=password">Modifier ton mot de passe</a>
-                <br>
-                <a href="profil.php?modifier=login">Modifier ton login</a>
-                <br>
-                <a href="profil.php?modifier=prenom">Modifier ton prenom</a>
-                <br>
-                <a href="profil.php?modifier=nom">Modifier ton nom</a>
-
-            </p>
-
-
-            <?php
-if ($_GET['modifier'] == "login") {
-
-        if (isset($_POST['valider'])) {
-
-            if (mysqli_query($mysqli, "UPDATE utilisateurs SET login='" . htmlentities($_POST['login'], ENT_QUOTES, "UTF-8") . "' WHERE login='$login'")) {
-                echo "<h2Login {$_POST['login']} modifié avec succès!<h2>";
-                $resultat = true;
-            } else {
-                echo "Il y a une erreur, mince !";
-            }
-        }
-
-        if (!isset($resultat)) {
-            ?>
-                    <br>
-                    <form method="post" action="profil.php?modifier=login">
-                     <p>Login</p>   <input type="text" name="login" value="<?php echo $info['login']; ?>" required>
-                        <input type="submit" name="valider" value="Valider la modification" class="submit">
-                    </form>
-                    <?php
-}
-    } elseif ($_GET['modifier'] == "prenom") {
-        if (isset($_POST['valider'])) {
-            if (!isset($_POST['prenom'])) {
-                echo "Le champ prenom n'est pas reconnu.";
-            } else {
-                if ($_POST['prenom']) {
-
-                    if (mysqli_query($mysqli, "UPDATE utilisateurs SET prenom='" . htmlentities($_POST['prenom']) . "' WHERE login='$login'")) {
-                        echo "<h1>Login {$_POST['prenom']} modifiée avec succès!</h1>";
-                        $resultat = true;
-                    } else {
-                        echo "Il y a une erreur, mince !";
-                    }
-                }
-            }
-        }
-        if (!isset($resultat)) {
-            ?>
-                    <br>
-                    <form method="post" action="profil.php?modifier=prenom">
-                     <p>Prénom</p>   <input type="text" name="prenom" value="<?php echo $info['prenom']; ?>" required>
-                        <input type="submit" name="valider" value="Valider la modification" class="submit">
-                    </form>
-                    <?php
-}
-    } elseif ($_GET['modifier'] == "nom") {
-        if (isset($_POST['valider'])) {
-            if (!isset($_POST['nom'])) {
-                echo "Le champ nom n'est pas reconnu.";
-            } else {
-                if ($_POST['nom']) {
-
-                    echo "Le nom semble incorrecte.";
-
-                } else {
-                    if (mysqli_query($mysqli, "UPDATE utilisateurs SET nom='" . htmlentities($_POST['nom'], ENT_QUOTES, "UTF-8") . "' WHERE login='$login'")) {
-                        echo "{$_POST['prenom']} modifiée avec succès!";
-                        $resultat = true;
-                    } else {
-                        echo "Il y a une erreur, mince !";
-                    }
-                }
-            }
-        }
-        if (!isset($resultat)) {
-            ?>
-                    <br>
-                    <form method="post" action="profil.php?modifier=nom">
-                    <p>Nom</p>    <input type="text" name="nom" value="<?php echo $info['nom']; ?>" required>
-                        <input type="submit" name="valider" value="Valider la modification" class="submit">
-                    </form>
-                    <?php
-}
-    } elseif ($_GET['modifier'] == "password") {
-        echo "<p>Remplis les champs </p>";
-        if (isset($_POST['valider'])) {
-            if (!isset($_POST['nouveaupassword'], $_POST['confirmerpassword'], $_POST['password'])) {
-                echo "Un des champs n'est pas reconnu.";
-            } else {
-                if ($_POST['nouveaupassword'] != $_POST['confirmerpassword']) {
-                    echo "Les mots de passe ne correspondent pas.";
-                } else {
-                    $password = md5($_POST['password']);
-                    $newpassword = md5($_POST['nouveaupassword']);
-                    $req = mysqli_query($mysqli, "SELECT * FROM utilisateurs WHERE login='$login' AND password='$password'");
-
-                    if (mysqli_query($mysqli, "UPDATE utilisateurs SET password='$newpassword' WHERE login='$login'")) {
-                        echo "<h1>Mot de passe modifié avec succès!	</h1>";
-                        $resultat = true;
-                    } else {
-                        echo "Une erreur est survenue, on essaye de corriger ça!";
-                    }
-
-                }
-            }
-        }
-        if (!isset($resultat)) {
-            ?>
-                    <br>
-                    <form method="post" action="profil.php?modifier=password">
-                     <p>Ici ton nouveau mot de passe</p>   <input type="password" name="nouveaupassword" placeholder="Nouveau mot de passe..." required>
-                      <p>Répète le encore une fois STP</p>  <input type="password" name="confirmerpassword" placeholder="Confirmer nouveau passe..." required>
-                     <p>Tu te souviens du mot de passe actuel ?</p>   <input type="password" name="password" placeholder="Ton mot de passe actuel..." required>
-                      <br/>  <input type="submit" name="valider" value="Valider la modification" class="submit">
-                    </form>
-                    <?php
-}
-    }
-
-}
-?>
-    </body>
-</html>
->>>>>>> profil.php

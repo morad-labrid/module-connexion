@@ -34,7 +34,6 @@ if (isset($_POST['submit'])) {
     } else {
         $remplissez = "Remplissez le formulaire YALAHMAR<br>";
     }
-    
 
 }
 

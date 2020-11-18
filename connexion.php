@@ -2,12 +2,13 @@
 
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "root";
 $dbname = "moduleconnexion";
 $wrong = "";
 
 $sql = mysqli_connect($servername, $username, $password, $dbname);
 session_start();
+
 if (isset($_POST['submit'])) {
     $login = $_POST['login'];
     $password = $_POST['password'];
@@ -15,10 +16,13 @@ if (isset($_POST['submit'])) {
 
     if (mysqli_num_rows(mysqli_query($sql, $query)) > 0) {
         $_SESSION['login'] = $login;
-        header("Location:index.php");
+        header("Location:profil.php");
     } else {
         $wrong = "le login ou le mot de passe n'est pas correct";
     }
+}
+if (isset($_SESSION['login'])) { // si deja connecter rederiction vers le profil.php
+    header("Location:profil.php");
 }
 
 ?>

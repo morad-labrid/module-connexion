@@ -11,11 +11,11 @@ $remplissez = "";
 $sql = mysqli_connect($servername, $username, $password, $dbname);
 
 if (isset($_POST['submit'])) {
-    $login = $_POST['login'];
-    $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    $login = trim($_POST['login']);
+    $nom = trim($_POST['nom']);
+    $prenom = trim($_POST['prenom']);
+    $password = trim($_POST['password']);
+    $confirm_password = trim($_POST['confirm_password']);
 
     $checklogin = mysqli_query($sql, "SELECT login FROM utilisateurs WHERE login='$login'");
 

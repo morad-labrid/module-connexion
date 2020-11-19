@@ -81,7 +81,7 @@ if (isset($_POST['exit'])) {
     </main>
     <footer>
         <div>
-            <p>Copyright 2020</p>
+            <p>Copyright 2020 All rights reserved - Samy & Morad</p>
         </div>
     </footer>
 </body>

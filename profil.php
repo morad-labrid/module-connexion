@@ -153,10 +153,10 @@ echo "Ton Mot de passe est: $password<br>";
     }
 
     if (isset($_POST['submitnewprenom'])) { // si l'utilisateur appuis sur valider (submitnewprenom)
-        $newPrenom = $_POST['newprenom'];
+        $newPrenom = trim($_POST['newprenom']);
 
         if (!empty($newPrenom)) { // si le formulaire est vide s'affichera un message erreur
-            $query = "UPDATE utilisateurs SET prenom='" . htmlentities($_POST['newprenom']) . "' WHERE login='$login'";
+            $query = "UPDATE utilisateurs SET prenom='" . htmlentities($newPrenom) . "' WHERE login='$login'";
 
             if (mysqli_query($sql, $query)) {
                 $valide = "vous avez bien modifier votre prénom($prenom) à ($newPrenom)";
@@ -188,13 +188,13 @@ echo "Ton Mot de passe est: $password<br>";
     }
 
     if (isset($_POST['submitnewpass'])) {
-        $newpassword = $_POST['newpass'];
-        $confirm_password = $_POST['confirmnewpass'];
+        $newpassword = trim($_POST['newpass']);
+        $confirm_password = trim($_POST['confirmnewpass']);
         
-        if (!empty($_POST['pass']) && !empty($_POST['newpass']) && !empty($_POST['confirmnewpass'])) {
-            $query = "UPDATE utilisateurs SET password='" . htmlentities($_POST['newpass']) . "' WHERE login='$login'";
+        if (!empty($_POST['pass']) && !empty($newpassword) && !empty($confirm_password)) {
+            $query = "UPDATE utilisateurs SET password='" . htmlentities($newpassword) . "' WHERE login='$login'";
     if ($_POST['pass'] == $password) {
-        if ($_POST['newpass'] != $_POST['confirmnewpass']) {
+        if ($newpassword != $confirm_password) {
             $same = "le mot de passe n'est pas le même !!<br>";
         }
         
@@ -238,7 +238,7 @@ echo "Ton Mot de passe est: $password<br>";
         (mysqli_query($sql, "DELETE FROM utilisateurs WHERE login = '$login'"));
         session_unset ( );
         $oui = "Votre compte a bien été supprimé";
-        header("Refresh:3"); 
+        header("Refresh:2"); 
 
     }
 

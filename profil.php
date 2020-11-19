@@ -91,9 +91,9 @@ echo "Ton Mot de passe est: $password<br>";
             }
             
             elseif (mysqli_query($sql, $query)) {
-                $_SESSION['login'] = $newLogin;
                 $valide = "vous avez bien modifié '$login' à '$newLogin' <br>";
                 header("Refresh:3");
+                $_SESSION['login'] = $newLogin;
             }
             
         }else {

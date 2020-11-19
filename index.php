@@ -3,79 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
     <title>Good Vibes</title>
-    <style>
-        *{
-            margin: 0;
-            padding: 0;
-        }
-        body{
-            background-color: #090535;
-            color: white;
-            font-family: 'Archivo', cursive, sans-serif;
-            padding: 0 100px;
-        }
-        header div h1{
-            font-family: 'Pacifico', cursive, sans-serif;
-            margin: 0;
-        }
-        a{
-            text-decoration: none;
-            color: inherit;
-        }
-        header{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: 10px;
-        }
-        main section div p{
-            width: 400px;
-            margin-top: 30px;
-            letter-spacing: 2px
-        }
-        main section div h1{
-            font-size: 50px;
-        }
-
-        img{
-            width: 450px;
-        }
-        section{
-            margin-top: 150px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        nav a{
-            margin: 0 15px;
-        }
-        footer{
-            
-        }
-    
-    
-    </style>
 </head>
 <body>
     <header>
         <div>
-            <h1>VIBES</h1>
+            <h1><a href="index.php">VIBES</a></h1>
         </div>
         <nav>
-            <a href="">Inscription</a>
-            <a href="">Connexion</a>
+            <a href="inscription.php">Inscription</a>
+            <a href="connexion.php">Connexion</a>
         </nav>
     </header>
     <main>
         <section>
             <div>
                 <h1>Trouvez votre vibe</h1>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. In libero omnis repellat doloribus expedita.</p>
+                <p>Vibes est une application qui permet a toutes utilisateurs de suivre une tendance dans chaque domaine. Inscrit toi et vient suivre les tendances</p>
+            <a href="inscription.php"><input type="submit" value="S'inscrire"></a>
+            
             </div>
             <div>
                 <img src="assets/banner1-3.png" alt="Photo">

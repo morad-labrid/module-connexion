@@ -7,109 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
     <title>Document</title>
-    <style>
-        *{
-            margin: 0;
-            padding: 0;
-        }
-        body{
-            background-color: #090535;
-            color: white;
-            font-family: 'Archivo', cursive, sans-serif;
-            padding: 0 100px;
-        }
-        header div h1{
-            font-family: 'Pacifico', cursive, sans-serif;
-            margin: 0;
-        }
-        a{
-            text-decoration: none;
-            color: inherit;
-        }
-        header{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: 10px;
-        }
-
-        main section div p{
-            width: 400px;
-            margin-top: 30px;
-            letter-spacing: 2px
-        }
-        main section div h1{
-            font-size: 50px;
-        }
-
-        img{
-            width: 450px;
-        }
-        section div form{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-direction: column;
-        }
-        section div h3{
-            text-align: center;
-            color: red;
-        }
-        nav a{
-            margin: 0 15px;
-        }
-        main{
-            padding: 100px 0;
-        }
-        footer{
-            text-align: center;
-        }
-        form input{
-            background: none;
-            border: 1px solid white;
-            width: 250px;
-            height: 30px;
-            color: white;
-            padding: 0 20px;
-            margin: 8px;
-            outline: none;
-        }
-        form input:focus{
-            box-shadow: 0px 0px 10px 2px rgba(255,255,255,1);
-            border: 0 solid white;
-            width: 280px;
-            height: 32px;
-            transition:0.5s;
-        }
-        input::placeholder {
-            color: white;
-            font-weight: lighter;
-        }
-        input[type="submit"]{
-        cursor:pointer;
-        width: 100px
-        }
-        input[type="submit"]:hover{
-        background-color: white;
-        color: black;
-        }
-        input[type="submit"]:focus{
-            width: 100px
-        }
-
-
-    </style>
 </head>
+
 <body>
     <header>
         <div>
-            <h1>VIBES</h1>
+        <h1><a href="index.php">VIBES</a></h1>
         </div>
-        <nav>
-            <a href="">Inscription</a>
-            <a href="">Connexion</a>
-        </nav>
     </header>
     <main>
     <?php
@@ -118,14 +24,14 @@ session_start();
 if (!isset($_SESSION['login'])) {
     header("Refresh: 3; url=connexion.php");
     echo "<p>Tu dois te connecter pour accéder à ton profil.</p><br><p>Redirection en cours, retour à la page d'accueil...</p>";
-    exit(0);
+    exit();
 }
 $login = $_SESSION['login'];
-$sql = mysqli_connect('localhost', 'root', 'root', 'moduleconnexion');
+$sql = mysqli_connect('localhost', 'root', '', 'moduleconnexion');
         
     if (!$sql) {
             echo "Erreur connexion";
-            exit(0);
+            exit();
     }else {
             echo "<h1>Bienvenue sur ton profil $login</h1><br>";
     }
@@ -135,6 +41,14 @@ $info = mysqli_fetch_assoc($req);
 $prenom = $info['prenom'];
 $nom = $info['nom'];
 $password = $info['password'];
+
+
+
+
+
+if ($login == "admin") {
+    header("Location: admin.php");
+}
 
 echo "Ton login est: $login<br>";
 echo "Ton Prénom est: $prenom<br>";
@@ -165,21 +79,21 @@ echo "Ton Mot de passe est: $password<br>";
         $newLogin = $_POST['newlogin'];
         $checklogin = mysqli_query($sql, "SELECT login FROM utilisateurs WHERE login='$login'");
         
-        if (!empty($newLogin)) { // si le formulaire est vide s'affichera un message erreur
-            $query = "UPDATE utilisateurs SET login='" . htmlentities($_POST['newlogin']) . "' WHERE login='$login'";
+        if (!empty(trim($newLogin))) { // si le formulaire est vide s'affichera un message erreur
+            $query = "UPDATE utilisateurs SET login='" . htmlentities(trim($newLogin)) . "' WHERE login='$login'";
 
             if ($login == $newLogin) {
                 $same = "utiliser un login différent que $login !!<br>";
             }
             
-            elseif (mysqli_num_rows($checklogin) == 0) {
+            elseif (mysqli_num_rows($checklogin) != 0) {
                 $existe = "Le login que vous avez saisi est déjà utilisé par un autre utilisateur<br>veuillez indiquer un autre Login :)";
             }
             
             elseif (mysqli_query($sql, $query)) {
-                $valide = "vous avez bien modifié '$login' à '$newLogin' <br>";
                 $_SESSION['login'] = $newLogin;
-                header("Refresh:3"); 
+                $valide = "vous avez bien modifié '$login' à '$newLogin' <br>";
+                header("Refresh:3");
             }
             
         }else {
@@ -202,17 +116,17 @@ echo "Ton Mot de passe est: $password<br>";
             <input type="submit" name="submitnewnom" value="valider">
             </form>';
     }
-
+    $newNom = trim($_POST['newnom']);
 
     if (isset($_POST['submitnewnom'])) { // si l'utilisateur appuis sur valider (submitnewnom)
-        $newNom = $_POST['newnom'];
-
+        
         if (!empty($newNom)) { // si le formulaire est vide s'affichera un message erreur
-            $query = "UPDATE utilisateurs SET nom='" . htmlentities($_POST['newnom']) . "' WHERE login='$login'";
+            $query = "UPDATE utilisateurs SET nom='" . htmlentities(trim($newNom)) . "' WHERE login='$login'";
 
             if (mysqli_query($sql, $query)) {
                 $valide = "vous avez bien modifier votre nom($nom) à ($newNom)";
                 header("Refresh:3");
+
             }
             
         }else {
@@ -305,7 +219,7 @@ echo "Ton Mot de passe est: $password<br>";
     // Pour se déconnecter de la session
     if (isset($_POST['deconnecter'])) {
         session_unset ( );
-        header("Refresh:0"); 
+        header("Location: connexion.php"); 
     }
     /////////////////////////////////////////
     /////////////////////////////////////////

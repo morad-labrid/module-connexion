@@ -86,7 +86,7 @@ echo "Ton Mot de passe est: $password<br>";
                 $same = "utiliser un login différent que $login !!<br>";
             }
             
-            elseif (mysqli_num_rows($checklogin) != 0) {
+            elseif (mysqli_num_rows($checklogin) == 0) {
                 $existe = "Le login que vous avez saisi est déjà utilisé par un autre utilisateur<br>veuillez indiquer un autre Login :)";
             }
             

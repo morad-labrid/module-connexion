@@ -9,6 +9,7 @@ $existe = "";
 $remplissez = "";
 
 $sql = mysqli_connect($servername, $username, $password, $dbname);
+session_start();
 
 if (isset($_POST['submit'])) {
     $login = trim($_POST['login']);
@@ -35,6 +36,9 @@ if (isset($_POST['submit'])) {
         $remplissez = "Remplissez le formulaire YALAHMAR<br>";
     }
 
+}
+elseif (isset($_SESSION['login'])) { // si deja connecter rederiction vers le profil.php
+    header("Location:profil.php");
 }
 
 ?>
